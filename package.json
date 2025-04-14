@@ -1,0 +1,47 @@
+{
+  "name": "tep",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --open",
+    "build": "vue-tsc && vite build",
+    "build:test": "vue-tsc && vite build --mode test",
+    "build:pro": "vue-tsc && vite build --mode production",
+    "preview": "vite preview",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs"
+  },
+  "dependencies": {
+    "@ant-design/icons-vue": "^7.0.1",
+    "@element-plus/icons": "^0.0.11",
+    "@element-plus/icons-vue": "^2.3.1",
+    "ant-design-vue": "^4.1.2",
+    "antd": "^5.16.2",
+    "axios": "^1.6.8",
+    "echarts": "^5.5.0",
+    "element-plus": "^2.6.1",
+    "less": "^4.2.0",
+    "mitt": "^3.0.1",
+    "ol": "^9.0.0",
+    "pinia": "^2.1.7",
+    "vitepress": "^1.1.0",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0",
+    "vue3-markdown-it": "^1.0.10"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.29",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "concurrently": "^8.2.2",
+    "fast-glob": "^3.3.2",
+    "mockjs": "^1.1.0",
+    "prettier": "3.2.5",
+    "sass": "^1.72.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.6",
+    "vite-plugin-mock": "^3.0.1",
+    "vite-plugin-svg-icons": "^2.0.1",
+    "vue-tsc": "^1.8.27"
+  }
+}
