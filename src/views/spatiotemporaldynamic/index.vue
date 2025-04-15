@@ -59,9 +59,9 @@ onMounted(() => {
     source: new TileWMS({
       //@ts-ignore
       ratio: 1,
-      url: 'http://localhost:8080/geoserver/NanJing/wms',
+      url: 'http://localhost:8080/geoserver/ndvi_data/wms',
       params: {
-        LAYERS: 'NanJing:2000年地类重分类',
+        LAYERS: 'ndvi_data:阿克苏地区_month1_vis',
         STYLES: '',
         VERSION: '1.1.1',
         tiled: true,
