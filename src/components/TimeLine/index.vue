@@ -56,16 +56,16 @@ let IconHeight = '55px';
 // const togglePlay = () => {};
 const activities = [
   {
-    content: '2000',
+    content: '一月份',
     timestamp: '2018-04-15',
     color: '#0bbd87',
   },
   {
-    content: '2010',
+    content: '二月份',
     timestamp: '2018-04-13',
   },
   {
-    content: '2020',
+    content: '三月份',
     timestamp: '2018-04-11',
   },
 ];
