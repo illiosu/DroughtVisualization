@@ -8,7 +8,8 @@ import matplotlib.pyplot as plt
 from shapely.geometry import box
 import glob
 from tqdm import tqdm
-
+# 导入pypinyin进行中文转拼音
+from pypinyin import lazy_pinyin
 # ========== 全局配置 ==========
 plt.rcParams['font.sans-serif'] = ['SimHei']
 plt.rcParams['axes.unicode_minus'] = False
@@ -20,8 +21,11 @@ CITY_SHP = r"D:\\data\\shp\\SHP文件\\中国_市.shp"
 
 # 输入和输出目录
 NDVI_DIR = r"D:\download\百度网盘\干旱灾害可视化遥感数据\MOD13A3\202401\processed_ndvi"  # 修改为您的NDVI文件目录
-OUTPUT_DIR = r"D:\download\百度网盘\干旱灾害可视化遥感数据\MOD13A3\202401\处理"  # 修改为您想保存结果的目录
+OUTPUT_DIR = r"D:\data\geoserver_tif\MOD13A3"  # 修改为您想保存结果的目录
 
+def convert_to_pinyin(chinese_str):
+    """将中文名称转换为拼音"""
+    return ''.join(lazy_pinyin(chinese_str)).lower()
 
 def create_jet_colormap():
     """创建256级jet颜色表（兼容Matplotlib 3.7+）"""
@@ -174,11 +178,14 @@ def plot_region_data(ds, gdf, level, save_root, name_column=None, vmin=None, vma
             for time_idx in range(len(clipped.time)):
                 time_data = clipped.isel(time=time_idx)
                 date_str = time_data.time.dt.strftime("%Y%m%d").item()
+                
+                # 转换中文名称为拼音
+                pinyin_name = convert_to_pinyin(name)
 
                 # 原始数据路径
-                out_path = os.path.join(out_dir, f"{name}_NDVI_{date_str}.tif")
+                out_path = os.path.join(out_dir, f"{pinyin_name}_NDVI_{date_str}.tif")
                 # 可视化版本路径
-                vis_path = os.path.join(out_dir, f"{name}_NDVI_{date_str}_vis.tif")
+                vis_path = os.path.join(out_dir, f"{pinyin_name}_NDVI_{date_str}_vis.tif")
 
                 # 检查数据有效性
                 if np.isnan(time_data.values).all():

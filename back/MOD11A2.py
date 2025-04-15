@@ -12,7 +12,8 @@ from matplotlib.animation import FuncAnimation
 from matplotlib import rcParams
 import geopandas as gpd
 from shapely.geometry import box
-
+# 导入pypinyin进行中文转拼音
+from pypinyin import lazy_pinyin
 # ========== 全局配置 ==========
 rcParams['font.sans-serif'] = ['SimHei']
 rcParams['axes.unicode_minus'] = False
@@ -27,6 +28,11 @@ PROVINCE_SHP = r"D:\\data\\shp\\SHP文件\\中国_省.shp"
 CITY_SHP = r"D:\\data\\shp\\SHP文件\\中国_市.shp"
 
 # ========== 工具函数 ==========
+# ========== 工具函数 ==========
+def convert_to_pinyin(chinese_str):
+    """将中文名称转换为拼音"""
+    return ''.join(lazy_pinyin(chinese_str)).lower()
+
 def create_directories(base_path):
     dirs = [
         os.path.join(base_path, "processed_masked", "Day"),
@@ -139,11 +145,17 @@ def plot_region_mean(ds, gdf, level, save_root, title_prefix="", name_column=Non
                 if m not in mean_month['month'].values:
                     print(f"⚠️ {name} 缺少月份{m}数据")
                     continue
+                # 将中文名称转换为拼音
+                pinyin_name = convert_to_pinyin(name)
 
                 # 原始数据路径
-                out_path = os.path.join(out_dir, f"{name}_month{m}.tif")
+                out_path = os.path.join(out_dir, f"{pinyin_name}_Tep_month{m}.tif")
                 # 可视化版本路径
-                vis_path = os.path.join(out_dir, f"{name}_month{m}_vis.tif")
+                vis_path = os.path.join(out_dir, f"{pinyin_name}_Tep_month{m}_vis.tif")
+                # # 原始数据路径
+                # out_path = os.path.join(out_dir, f"{name}_month{m}.tif")
+                # # 可视化版本路径
+                # vis_path = os.path.join(out_dir, f"{name}_month{m}_vis.tif")
 
                 # ===== 新增数据有效性检查 =====
                 month_data = mean_month.sel(month=m)
@@ -281,10 +293,9 @@ def temporal_analysis(base_path):
             continue
 
         # 原始数据保存路径
-        out_path = os.path.join(base_path, "plots", f"china_month{m}.tif")
-        # 可视化版本路径
-        vis_path = os.path.join(base_path, "plots", f"china_month{m}_vis.tif")
-
+        out_path = os.path.join(base_path, "plots", f"china_Tep_month{m}.tif")
+        vis_path = os.path.join(base_path, "plots", f"china_Tep_month{m}_vis.tif")
+        
         # 保存原始数据
         ds_downsampled.sel(month=m).rio.to_raster(out_path)
 
